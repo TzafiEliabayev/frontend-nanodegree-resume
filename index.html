@@ -36,8 +36,6 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
 </head>
 <body>
   <div id="main">
-    Hello world!   <!-- You'll be deleting this line in the course -->
-
     <!--
     Everything from here to the <script> tag below is the skeleton of your
     website. Your code will add information to each of the sections of the
@@ -122,27 +120,71 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
     */
 
 
-    if(document.getElementsByClassName('flex-item').length === 0) {
-      document.getElementById('topContacts').style.display = 'none';
+    // if(document.getElementsByClassName('flex-item').length === 0) {
+    //   document.getElementById('topContacts').style.display = 'none';
+    // }
+    // if(document.getElementsByTagName('h1').length === 0) {
+    //   document.getElementById('header').style.display = 'none';
+    // }
+    // if(document.getElementsByClassName('work-entry').length === 0) {
+    //   document.getElementById('workExperience').style.display = 'none';
+    // }
+    // if(document.getElementsByClassName('project-entry').length === 0) {
+    //   document.getElementById('projects').style.display = 'none';
+    // }
+    // if(document.getElementsByClassName('education-entry').length === 0) {
+    //   document.getElementById('education').style.display = 'none';
+    // }
+    // if(document.getElementsByClassName('flex-item').length === 0) {
+    //   document.getElementById('lets-connect').style.display = 'none';
+    // }
+    // if(document.getElementById('map') === null) {
+    //   document.getElementById('mapDiv').style.display = 'none';
+    // }
+
+    console.log("HTMLskillsStart >>> " + HTMLskillsStart);
+    console.log("HTMLskills >>> " + HTMLskills);
+    console.log("$('#skills') >>> " + $("#skills"));
+
+    var formattedName = HTMLheaderName.replace("%data%", bio.name);
+    var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
+    $("#header").prepend(formattedRole).prepend(formattedName);
+
+    if(bio.contacts.mobile != undefined) {
+      $("#topContacts").append(HTMLmobile.replace("%data%", bio.contacts.mobile));
     }
-    if(document.getElementsByTagName('h1').length === 0) {
-      document.getElementById('header').style.display = 'none';
+    if(bio.contacts.email != undefined) {
+      $("#topContacts").append(HTMLemail.replace("%data%", bio.contacts.email));
     }
-    if(document.getElementsByClassName('work-entry').length === 0) {
-      document.getElementById('workExperience').style.display = 'none';
+    if(bio.contacts.github != undefined) {
+      $("#topContacts").append(HTMLgithub.replace("%data%", bio.contacts.github));
     }
-    if(document.getElementsByClassName('project-entry').length === 0) {
-      document.getElementById('projects').style.display = 'none';
+    if(bio.contacts.location != undefined) {
+      $("#topContacts").append(HTMLlocation.replace("%data%", bio.contacts.location));
     }
-    if(document.getElementsByClassName('education-entry').length === 0) {
-      document.getElementById('education').style.display = 'none';
+
+    if(bio.biopic != undefined){
+      $("#header").prepend(HTMLbioPic.replace("%data%", bio.biopic));
     }
-    if(document.getElementsByClassName('flex-item').length === 0) {
-      document.getElementById('lets-connect').style.display = 'none';
+
+    if(bio.skills.length > 0) {
+      $("#header").append(HTMLskillsStart);
+      /*HTMLskills is th js object
+      whereas the $("#skills") is the HTML object*/
+      var formattedSkill = HTMLskills.replace("%data%", bio.skills[0]);
+      $("#skills").append(formattedSkill);
     }
-    if(document.getElementById('map') === null) {
-      document.getElementById('mapDiv').style.display = 'none';
-    }
+
+    displayWork();
+
+    function displayWork(){
+    for(job in work.jobs)
+    {
+      $("#workExperience").append(HTMLworkStart);
+      var formattedEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
+      var formattedJobTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
+      $(".work-entry:last").append(formattedEmployer + formattedJobTitle)
+    }}
   </script>
 </body>
 </html>
